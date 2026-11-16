@@ -1,6 +1,7 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useConfig } from './config'
+import { initBgm } from './lib/bgm'
 import { useApplyDisplay, useProfile } from './lib/profile'
 import Admin from './pages/Admin'
 import FamilyWorship from './pages/FamilyWorship'
@@ -15,6 +16,7 @@ const MyPath3D = lazy(() => import('./pages/MyPath3D'))
 export default function App() {
   useConfig() // 문서 제목 반영
   useApplyDisplay(useProfile())
+  useEffect(() => { initBgm() }, [])
   return (
     <HashRouter>
       <Routes>

@@ -1,4 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
+import { BgmToggle } from '../components/BgmPanel'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import BottomNav from '../components/BottomNav'
@@ -111,6 +112,7 @@ export default function Today() {
               {[...sermons].reverse().map((s) => <option key={s.id} value={s.id}>📅 {fmtDate(parseDate(s.date))} 주</option>)}
             </select>
           )}
+          <BgmToggle />
         </div>
       </header>
 

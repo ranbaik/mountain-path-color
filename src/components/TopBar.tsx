@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { BgmToggle } from './BgmPanel'
 
 export default function TopBar({ title, back, right }: { title: string; back?: string; right?: ReactNode }) {
   const nav = useNavigate()
@@ -11,6 +12,7 @@ export default function TopBar({ title, back, right }: { title: string; back?: s
         )}
         <h1 className="flex-1 truncate font-serif text-lg font-bold">{title}</h1>
         {right}
+        <BgmToggle />
       </div>
     </header>
   )

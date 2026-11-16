@@ -11,6 +11,8 @@ export interface AppConfig {
   logoUrl: string      // 비우면 표시 안 함 (예: "./logo.png")
   sermonsUrl: string   // 설교 목록 JSON 주소
   contactNote: string  // 더보기 > 앱 정보에 보일 안내(선택)
+  bgmUrl: string       // (선택) 교회가 사용 허락을 받은 기본 배경음악 주소. 비우면 각자 고른 파일만
+  bgmTitle: string     // 위 음악의 곡명·출처 표기
 }
 
 export const DEFAULT_CONFIG: AppConfig = {
@@ -20,6 +22,8 @@ export const DEFAULT_CONFIG: AppConfig = {
   logoUrl: '',
   sermonsUrl: './sermons.json',
   contactNote: '',
+  bgmUrl: '',
+  bgmTitle: '',
 }
 
 let cached: Promise<AppConfig> | null = null

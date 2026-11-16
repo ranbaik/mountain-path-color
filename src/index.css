@@ -7,13 +7,15 @@
   /* 기본(분홍). 실제 값은 lib/theme.ts applyTheme 가 고른 테마로 덮어씀 */
   --m-50: 255 240 247; --m-100: 255 224 239; --m-200: 255 194 223; --m-300: 255 163 207; --m-400: 255 134 193;
   --m-500: 255 105 180; --m-600: 214 40 127; --m-700: 173 31 103; --m-800: 127 26 76;
+  /* 글꼴: lib/font.ts applyFont 가 고른 글꼴로 덮어씀 */
+  --app-font: "Jua"; --app-synth: none;
 }
 html, body, #root { min-height: 100%; }
 body {
   @apply bg-moss-50 text-ink-900 font-sans antialiased;
   word-break: keep-all;
-  /* Jua 는 굵기가 하나뿐이라 가짜 굵게(번진 글씨)를 만들지 않음 */
-  font-synthesis: none;
+  /* 굵기가 하나뿐인 글꼴(주아·고운돋움)은 가짜 굵게(번진 글씨)를 만들지 않음 */
+  font-synthesis: var(--app-synth);
   -webkit-tap-highlight-color: transparent;
 }
 .safe-top { padding-top: max(env(safe-area-inset-top), 1rem); }

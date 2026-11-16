@@ -8,6 +8,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import BottomNav from '../components/BottomNav'
 import { db, hasContent, type Meditation, type Sermon } from '../db'
 import { makeFaceCanvas, type AvatarGender } from '../lib/avatar'
+import { BgmToggle } from '../components/BgmPanel'
 import { useProfile } from '../lib/profile'
 import { useSermons } from '../lib/sermons'
 import { WEEKDAYS, dayPlans, fmtDate, parseDate } from '../lib/split'
@@ -438,8 +439,9 @@ export default function MyPath3D() {
     <div className="flex h-dvh flex-col" style={{ background: `linear-gradient(to bottom, ${theme.sky[0]}, ${theme.sky[1]})` }}>
       <header className="safe-top z-10 px-4 pb-2">
         <div className="mx-auto flex max-w-xl items-center gap-2">
-          <h1 className="flex-1 font-serif text-lg font-bold">⛰️ 나의 길</h1>
-          <span className="text-sm text-ink-700">⛰️ {climbed}주 묵상 · {sermons.length}개 정거장</span>
+          <h1 className="flex-1 whitespace-nowrap font-serif text-lg font-bold">⛰️ 나의 길</h1>
+          <span className="min-w-0 truncate text-sm text-ink-700">{climbed}주 묵상 · {sermons.length}개 정거장</span>
+          <BgmToggle />
         </div>
       </header>
 

@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import type { Profile } from '../db'
 import { saveProfile, useProfile } from '../lib/profile'
+import { DEFAULT_FONT, FONTS, type FontKey } from '../lib/font'
 import { DEFAULT_THEME } from '../lib/theme'
+import BgmPanel from './BgmPanel'
 import ThemePicker from './ThemePicker'
 
 /** 글자 크기 4단계 (시니어용 ‘아주 크게’ 포함) */
@@ -29,7 +31,26 @@ export function FontSizePicker({ value, onChange }: { value: Profile['fontScale'
   )
 }
 
-/** 하단 메뉴 ‘🎨 꾸미기’를 누르면 아래에서 올라오는 창: 앱 색상 · 글자 크기 · 크게 보기 */
+/** 글꼴 고르기: 각 단추를 그 글꼴로 보여 줌 */
+export function FontPicker({ value, onChange }: { value: FontKey; onChange: (k: FontKey) => void }) {
+  return (
+    <div className="grid grid-cols-3 gap-2 sm:grid-cols-5" role="radiogroup" aria-label="글꼴">
+      {FONTS.map((f) => {
+        const on = value === f.key
+        return (
+          <button key={f.key} type="button" role="radio" aria-checked={on} onClick={() => onChange(f.key)}
+            style={{ fontFamily: `${f.family}, Pretendard, sans-serif` }}
+            className={`flex flex-col items-center rounded-2xl border px-1 py-2 ${on ? 'border-moss-500 bg-moss-100 text-moss-700' : 'border-moss-200 bg-white text-ink-700'}`}>
+            <span className="text-[19px] leading-tight">{on ? '✓ ' : ''}{f.label}</span>
+            <span className="mt-0.5 text-[11px] leading-tight text-ink-500">{f.hint}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+/** 하단 메뉴 ‘🎨 꾸미기’를 누르면 아래에서 올라오는 창: 앱 색상 · 글꼴 · 글자 크기 · 크게 보기 · 배경음악 */
 export default function DisplaySheet({ onClose }: { onClose: () => void }) {
   const p = useProfile()
   useEffect(() => {
@@ -55,6 +76,10 @@ export default function DisplaySheet({ onClose }: { onClose: () => void }) {
           <ThemePicker value={theme} onChange={(k) => saveProfile({ theme: k })} />
         </div>
         <div>
+          <p className="field-label">✏️ 글꼴</p>
+          <FontPicker value={p?.font ?? DEFAULT_FONT} onChange={(k) => saveProfile({ font: k })} />
+        </div>
+        <div>
           <p className="field-label">🔠 글자 크기</p>
           <FontSizePicker value={font} onChange={(v) => saveProfile({ fontScale: v })} />
         </div>
@@ -62,6 +87,7 @@ export default function DisplaySheet({ onClose }: { onClose: () => void }) {
           <input type="checkbox" className="h-6 w-6 accent-moss-600" checked={!!p?.seniorMode} onChange={(e) => saveProfile({ seniorMode: e.target.checked })} />
           <span><b>👵 크게 보기 (시니어 모드)</b><br /><span className="text-sm text-ink-500">묵상 칸을 두 개로 줄이고 글씨를 한 번 더 키워요</span></span>
         </label>
+        <BgmPanel />
         <p className="pb-2 text-center text-xs text-ink-500">바꾼 내용은 바로 적용되고, 이 기기에 저장돼요.</p>
       </div>
     </div>

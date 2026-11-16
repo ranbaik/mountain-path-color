@@ -7,9 +7,11 @@ import type { Profile } from '../db'
 import { resizePhoto } from '../lib/avatar'
 import { exportBackup, importBackup } from '../lib/backup'
 import { BIBLE_CREDIT } from '../lib/bible'
-import { FontSizePicker } from '../components/DisplaySheet'
+import BgmPanel from '../components/BgmPanel'
+import { FontPicker, FontSizePicker } from '../components/DisplaySheet'
 import ThemePicker from '../components/ThemePicker'
 import { saveProfile, useProfile } from '../lib/profile'
+import { DEFAULT_FONT } from '../lib/font'
 import { DEFAULT_THEME } from '../lib/theme'
 
 export default function More() {
@@ -50,6 +52,11 @@ export default function More() {
             <p className="field-label">🔠 글자 크기</p>
             <FontSizePicker value={prof.fontScale} onChange={(v) => saveProfile({ fontScale: v })} />
           </div>
+          <div>
+            <p className="field-label">✏️ 글꼴</p>
+            <FontPicker value={prof.font ?? DEFAULT_FONT} onChange={(k) => saveProfile({ font: k })} />
+          </div>
+          <BgmPanel />
         </section>
 
         <section className="card space-y-3">

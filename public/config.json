@@ -4,5 +4,7 @@
   "churchName": "",
   "logoUrl": "",
   "sermonsUrl": "./sermons.json",
-  "contactNote": ""
+  "contactNote": "",
+  "bgmUrl": "",
+  "bgmTitle": ""
 }

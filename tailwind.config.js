@@ -11,8 +11,8 @@ export default {
         ink: { 900: '#2d2a2e', 700: '#4b464d', 500: '#76707a', 300: '#c4bfc7' },
       },
       fontFamily: {
-        sans: ['Jua', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Apple SD Gothic Neo', 'Noto Sans KR', 'sans-serif'],
-        serif: ['Jua', 'Pretendard', 'sans-serif'],   // 제목·본문도 같은 Jua 로
+        sans: ['var(--app-font)', 'Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Apple SD Gothic Neo', 'Noto Sans KR', 'sans-serif'],
+        serif: ['var(--app-font)', 'Pretendard', 'sans-serif'],   // 제목·본문도 고른 글꼴로 (lib/font.ts)
       },
       boxShadow: { card: '0 6px 24px -12px rgb(var(--m-800) / 0.3)' },
     },

@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect } from 'react'
 import { db, type Profile } from '../db'
+import { applyFont } from './font'
 import { applyTheme } from './theme'
 
 export const DEFAULT_PROFILE: Profile = { id: 'me', name: '', seniorMode: false, fontScale: 1 }
@@ -27,4 +28,6 @@ export function useApplyDisplay(p: Profile | null | undefined) {
   const theme = p?.theme
   const loaded = p !== undefined
   useEffect(() => { if (loaded) applyTheme(theme) }, [loaded, theme])
+  const font = p?.font
+  useEffect(() => { if (loaded) applyFont(font) }, [loaded, font])
 }

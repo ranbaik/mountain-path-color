@@ -45,15 +45,23 @@ export interface Profile {
   avatarGender?: 'female' | 'male'
   avatarPhoto?: string    // 정사각형 JPEG dataURL, 기기에만 저장
   theme?: 'orange' | 'sky' | 'purple' | 'pink' | 'green'  // 앱 색상 (lib/theme.ts)
+  font?: 'jua' | 'gowun' | 'nanumGothic' | 'nanumMyeongjo' | 'pretendard'  // 글꼴 (lib/font.ts)
+  bgmOn?: boolean          // 배경음악 켜 두기 (lib/bgm.ts)
+  bgmVolume?: number       // 0~1
+  kakaoRoom?: string       // 우리 목장 카카오톡 오픈채팅 주소 (선택, 기기에만)
 }
 
 /** 'feed' = 마지막으로 받은 sermons.json, 'draft' = 담당자가 이 기기에서만 미리 보는 설교 */
 export interface SermonCache { id: 'feed' | 'draft'; sermons: Sermon[]; fetchedAt: number }
 
+/** 배경음악으로 고른 음악 파일 (이 기기에만. 백업·공유에 들어가지 않음) */
+export interface MediaFile { id: 'bgm'; name: string; type: string; blob: Blob; updatedAt: number }
+
 export const db = new Dexie('mountain-path-color') as Dexie & {
   profile: EntityTable<Profile, 'id'>
   meditations: EntityTable<Meditation, 'id'>
   cache: EntityTable<SermonCache, 'id'>
+  media: EntityTable<MediaFile, 'id'>
 }
 
 db.version(1).stores({
@@ -61,6 +69,7 @@ db.version(1).stores({
   meditations: 'id, sermonId, updatedAt',
   cache: 'id',
 })
+db.version(2).stores({ media: 'id' })
 
 export const medId = (sermonId: string, weekday: Weekday) => `${sermonId}:${weekday}`
 
