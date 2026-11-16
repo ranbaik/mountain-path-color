@@ -32,13 +32,18 @@ body {
 }
 
 /* 본문: 읽기 편한 명조 */
-.scripture { @apply font-serif leading-[1.95] text-ink-900; font-size: 1.05rem; }
+.scripture { @apply font-serif leading-[1.85] text-ink-900; font-size: calc(1.05rem * var(--bible-scale, 1)); }
 .scripture sup { @apply mr-1 font-sans text-[0.7em] font-semibold text-moss-500; }
+/* 한 절씩 한 줄: 왼쪽 절 번호 + 오른쪽 본문, 절 사이 가는 선 */
+.verse { @apply border-b border-moss-100; }
+.verse:last-child { @apply border-b-0; }
+.verse-row { @apply grid grid-cols-[auto_1fr] items-baseline gap-x-[0.45em] py-[0.5em]; }
+.verse-no { @apply min-w-[1.7em] text-center font-sans text-[0.7em] font-semibold tabular-nums text-moss-500; }
 
 /* 시니어 모드: 글자·터치 영역 크게 */
 .senior .field { @apply py-4 text-lg; }
 .senior .field-label { @apply text-base; }
-.senior .scripture { font-size: 1.25rem; line-height: 2.05; }
+.senior .scripture { font-size: calc(1.25rem * var(--bible-scale, 1)); line-height: 1.95; }
 
 /* 인쇄 (가정예배 순서지) */
 .print-only { display: none; }

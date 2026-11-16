@@ -48,6 +48,7 @@ export interface Profile {
   font?: 'jua' | 'gowun' | 'nanumGothic' | 'nanumMyeongjo' | 'pretendard'  // 글꼴 (lib/font.ts)
   bgmOn?: boolean          // 배경음악 켜 두기 (lib/bgm.ts)
   bgmVolume?: number       // 0~1
+  bibleScale?: number      // 성경 본문만 따로 키우는 배율 (본문 위 가+ 가− 단추)
   kakaoRoom?: string       // 우리 목장 카카오톡 오픈채팅 주소 (선택, 기기에만)
 }
 
