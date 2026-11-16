@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  /* 기본(분홍). 실제 값은 lib/theme.ts applyTheme 가 고른 테마로 덮어씀 */
+  --m-50: 255 240 247; --m-100: 255 224 239; --m-200: 255 194 223; --m-300: 255 163 207; --m-400: 255 134 193;
+  --m-500: 255 105 180; --m-600: 214 40 127; --m-700: 173 31 103; --m-800: 127 26 76;
+}
+html, body, #root { min-height: 100%; }
+body {
+  @apply bg-moss-50 text-ink-900 font-sans antialiased;
+  word-break: keep-all;
+  /* Jua 는 굵기가 하나뿐이라 가짜 굵게(번진 글씨)를 만들지 않음 */
+  font-synthesis: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.safe-top { padding-top: max(env(safe-area-inset-top), 1rem); }
+.safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0.75rem); }
+
+@layer components {
+  .btn-primary { @apply inline-flex items-center justify-center rounded-full bg-moss-600 px-6 py-3 font-semibold text-white shadow-card transition active:scale-[0.98] hover:bg-moss-700 disabled:opacity-40; }
+  .btn-ghost { @apply inline-flex items-center justify-center rounded-full border border-moss-300 bg-white/70 px-5 py-2.5 text-sm font-medium text-moss-700 transition hover:bg-white disabled:opacity-40; }
+  .card { @apply rounded-3xl bg-white p-5 shadow-card; }
+  .field-label { @apply mb-1.5 block text-sm font-semibold text-ink-700; }
+  .field { @apply w-full rounded-2xl border border-moss-200 bg-moss-50/60 px-4 py-3 text-[15px] outline-none transition placeholder:text-ink-300 focus:border-moss-400 focus:bg-white; }
+  .chip { @apply rounded-full border px-3 py-1.5 text-sm transition; }
+  .page { @apply mx-auto max-w-xl space-y-4 px-4 pb-32; }
+}
+
+/* 본문: 읽기 편한 명조 */
+.scripture { @apply font-serif leading-[1.95] text-ink-900; font-size: 1.05rem; }
+.scripture sup { @apply mr-1 font-sans text-[0.7em] font-semibold text-moss-500; }
+
+/* 시니어 모드: 글자·터치 영역 크게 */
+.senior .field { @apply py-4 text-lg; }
+.senior .field-label { @apply text-base; }
+.senior .scripture { font-size: 1.25rem; line-height: 2.05; }
+
+/* 인쇄 (가정예배 순서지) */
+.print-only { display: none; }
+@media print {
+  @page { size: A4; margin: 16mm 14mm; }
+  html, body { background: #fff !important; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  /* 기도 등 비공개 칸은 어떤 경우에도 인쇄되지 않음 */
+  .private { display: none !important; }
+  .card { box-shadow: none !important; border: 1px solid rgb(var(--m-200)); break-inside: avoid; }
+  .page { padding-bottom: 0 !important; max-width: none !important; }
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .6s ease-out both; }
