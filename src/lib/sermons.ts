@@ -2,6 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useState } from 'react'
 import { loadConfig } from '../config'
 import { db, type Sermon } from '../db'
+import { dayPlans } from './split'
 
 export const byDate = (a: Sermon, b: Sermon) => a.date.localeCompare(b.date)
 
@@ -19,6 +20,22 @@ async function refreshFeed() {
   if (!Array.isArray(list)) throw new Error('설교 목록 형식이 올바르지 않아요')
   const sermons = list.filter(isSermon)
   await db.cache.put({ id: 'feed', sermons, fetchedAt: Date.now() })
+  prefetchBooks(sermons)
+}
+
+/**
+ * 이번 주와 앞으로 묵상할 본문의 성경 책 파일을 미리 받아 둠.
+ * 앱으로 설치된 경우 서비스 워커(public/sw.js)가 저장해 두므로 인터넷이 없어도 본문이 열림
+ */
+function prefetchBooks(sermons: Sermon[]) {
+  if (!navigator.serviceWorker?.controller) return
+  const from = new Date(Date.now() - 8 * 864e5).toISOString().slice(0, 10)
+  const books = new Set<number>()
+  for (const s of sermons) if (s.date >= from) for (const p of dayPlans(s) ?? []) books.add(p.ref.book)
+  let i = 0
+  for (const b of books) {
+    window.setTimeout(() => { fetch(`./bible/krv/${String(b).padStart(2, '0')}.json`).catch(() => {}) }, 1500 + i++ * 400)
+  }
 }
 
 let refreshing: Promise<void> | null = null

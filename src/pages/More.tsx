@@ -8,6 +8,7 @@ import { resizePhoto } from '../lib/avatar'
 import { exportBackup, importBackup } from '../lib/backup'
 import { BIBLE_CREDIT } from '../lib/bible'
 import BgmPanel from '../components/BgmPanel'
+import InstallApp from '../components/InstallApp'
 import ShareApp from '../components/ShareApp'
 import { FontPicker, FontSizePicker } from '../components/DisplaySheet'
 import ThemePicker from '../components/ThemePicker'
@@ -34,6 +35,7 @@ export default function More() {
     <div className="min-h-dvh">
       <TopBar title="⚙️ 더보기" />
       <main className="page">
+        <InstallApp />
         <ShareApp />
         <section className="card space-y-4">
           <h2 className="font-semibold">🎨 보기 설정</h2>
